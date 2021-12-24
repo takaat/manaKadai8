@@ -37,18 +37,21 @@ struct ItemView: View {
                 .ignoresSafeArea(edges: .top)
 
             VStack {
-                if sliderValue == 0 || sliderValue == 1 {
-                    Text(String(format: "%.1f", sliderValue))
-                        .font(.title)
-                } else {
-                    Text("\(sliderValue)")
-                        .font(.title)
-                }
+                Text(sliderValueText ?? "")
+                    .font(.title)
 
                 Slider(value: $sliderValue)
                     .padding()
             }
         }
+    }
+
+    private var sliderValueText: String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 6
+        return formatter.string(from: .init(value: sliderValue))
     }
 }
 
